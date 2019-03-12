@@ -15,6 +15,11 @@ from ML.TimePredictionModel import TimePredictionModel
 URL_TIME_FORMAT = "%H:%M"
 URL_DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
+# file names
+GREEN_TAXI_CSV = '../tripData/green_tripdata_2018-01.csv'
+YELLOW_TAXI_CSV = '../tripData/yellow_tripdata_2018-01.csv'
+FHV_TAXI_CSV = '../tripData/fhv_tripdata_2018-01.csv'
+
 def getDB():
     #init datase connection
     dba = TaxiTripDBA()
@@ -24,18 +29,15 @@ def getDB():
     # if the database didnt exist, then import data from csvs
     if not dbExists:
 
-        greenTaxiData = GreenTaxiTripService.GetRecordsFromService(
-            '../tripData/green_tripdata_2018-01.csv')
+        greenTaxiData = GreenTaxiTripService.GetRecordsFromService(GREEN_TAXI_CSV)
         dba.InsertTaxiRecords(greenTaxiData)
         del greenTaxiData
 
-        yellowTaxiData = YellowTaxiTripService.GetRecordsFromService(
-            '../tripData/yellow_tripdata_2018-01.csv')
+        yellowTaxiData = YellowTaxiTripService.GetRecordsFromService(YELLOW_TAXI_CSV)
         dba.InsertTaxiRecords(yellowTaxiData)
         del yellowTaxiData
 
-        fhvTaxiData = FHVTripService.GetRecordsFromService(
-            '../tripData/fhv_tripdata_2018-01.csv')
+        fhvTaxiData = FHVTripService.GetRecordsFromService(FHV_TAXI_CSV)
         dba.InsertTaxiRecords(fhvTaxiData)
         del fhvTaxiData
     return dba
